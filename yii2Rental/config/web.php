@@ -97,6 +97,7 @@ $config = [
         'allowActions' => [
             'site/login',
             'site/logout',
+            'inicio/*',
             //'users/*',
             //'paciente/*',
             //'site/*',

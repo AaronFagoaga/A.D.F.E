@@ -36,18 +36,51 @@ use yii\helpers\Url;
 
                 <!------- MENU INICIO ------->
 
-                <?php if (Yii::$app->controller->id == 'inicio' && in_array(\Yii::$app->controller->action->id, ['index'])) {
-                    $li = "nav-item active";
+                <?php if (Yii::$app->controller->id == 'inicio') {
+                    $li = "nav-item has-treeview active menu-open";
                     $a = "nav-link active";
                 } else {
                     $li = "nav-item ";
                     $a = "nav-link ";
                 }
                 ?>
-                <li class="<?= $li ?>"><a class="<?= $a ?>" href="<?= Url::toRoute(['/inicio/index']); ?>"><i
-                            class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Inicio</p>
+                <li class="<?= $li ?>"><a class="<?= $a ?>" href="#"><i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>CRUD Yii <i class="right fas fa-angle-left"></i></p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <!-------------------------------------------------->
+                        <?php
+                            if (Yii::$app->controller->id == 'inicio' && in_array(\Yii::$app->controller->action->id, ['index'])) {
+                                $li = "nav-item active";
+                                $a = "nav-link active";
+                            } else {
+                                $li = "nav-item";
+                                $a = "nav-link";
+                            }
+                        ?>
+                        <li class="<?= $li ?>"><a class="<?= $a ?>"
+                                href="<?php echo Url::toRoute(['/inicio/index']); ?>"><i
+                                    class="nav-icon far fa-circle text-yellow"></i>
+                                <p>Inicio</p>
+                            </a>
+                        </li>
+                        <!-------------------------------------------------->
+                        <?php
+                            if (Yii::$app->controller->id == 'inicio' && in_array(\Yii::$app->controller->action->id, ['index'])) {
+                                $li = "nav-item active";
+                                $a = "nav-link active";
+                            } else {
+                                $li = "nav-item";
+                                $a = "nav-link";
+                            }
+                        ?>
+                        <li class="<?= $li ?>"><a class="<?= $a ?>"
+                                href="<?php echo Url::toRoute(['/inicio/suma']); ?>"><i
+                                    class="nav-icon far fa-circle text-blue"></i>
+                                <p>Suma</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <!------- END INICIO ------->
 
