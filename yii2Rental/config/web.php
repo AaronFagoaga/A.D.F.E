@@ -98,6 +98,7 @@ $config = [
             'site/login',
             'site/logout',
             'inicio/*',
+            'tasks/*',
             //'users/*',
             //'paciente/*',
             //'site/*',

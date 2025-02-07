@@ -1,10 +1,6 @@
 <?php
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
-
-    if ($respuesta) {
-        echo Html::tag('div', Html::encode($respuesta), ['class' => 'alert alert-success']);
-    }
 ?>
 <div clas="row">
     <div class="container">
@@ -16,7 +12,7 @@
                 <?= Html::submitButton('Sumar', ['class' => 'btn btn-success']) ?>
             </div>
         <?php ActiveForm::end(); ?>
-        
+
         <?php if ($model->valor_a && $model->valor_b): ?>
             <h2>Resultado: <?= $model->suma() ?></h2>
         <?php endif; ?>

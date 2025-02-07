@@ -36,7 +36,7 @@ use yii\helpers\Url;
 
                 <!------- MENU INICIO ------->
 
-                <?php if (Yii::$app->controller->id == 'inicio') {
+                <?php if (Yii::$app->controller->id == 'inicio' || Yii::$app->controller->id == 'tasks') {
                     $li = "nav-item has-treeview active menu-open";
                     $a = "nav-link active";
                 } else {
@@ -78,6 +78,22 @@ use yii\helpers\Url;
                                 href="<?php echo Url::toRoute(['/inicio/suma']); ?>"><i
                                     class="nav-icon far fa-circle text-blue"></i>
                                 <p>Suma</p>
+                            </a>
+                        </li>
+                        <!-------------------------------------------------->
+                        <?php
+                            if (Yii::$app->controller->id == 'tasks' && in_array(\Yii::$app->controller->action->id, ['index', 'view', 'create', 'update'])) {
+                                $li = "nav-item active";
+                                $a = "nav-link active";
+                            } else {
+                                $li = "nav-item";
+                                $a = "nav-link";
+                            }
+                        ?>
+                        <li class="<?= $li ?>"><a class="<?= $a ?>"
+                                href="<?php echo Url::toRoute(['/tasks/index']); ?>"><i
+                                    class="nav-icon far fa-circle text-green"></i>
+                                <p>Tareas</p>
                             </a>
                         </li>
                     </ul>
