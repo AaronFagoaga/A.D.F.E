@@ -7,6 +7,14 @@ return [
     'password' => '1234',
     'charset' => 'utf8',
 
+    /*
+    'class' => 'yii\db\Connection',
+    'dsn' => 'mysql:host=localhost;dbname=dbYii2_Rental',
+    'username' => 'root',
+    'password' => 'P4ulitaDBP4ss!!!',
+    'charset' => 'utf8',
+    */
+
     // Schema cache options (for production environment)
     //'enableSchemaCache' => true,
     //'schemaCacheDuration' => 60,
