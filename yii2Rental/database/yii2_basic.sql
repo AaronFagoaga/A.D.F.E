@@ -255,3 +255,24 @@ ALTER TABLE `error_log`
 --
 ALTER TABLE `log`
   ADD CONSTRAINT `log_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
+
+
+
+-- Task table 
+CREATE TABLE tasks (
+id_task int(11) NOT NULL,
+code varchar(25) NOT NULL,
+name varchar(255) NOT NULL,
+description text,
+status tinyint (1) NOT NULL,
+created_by int(11) NOT NULL,
+created_at datetime NOT NULL,
+updatedted_by int(11) NOT NULL,
+updatedted_at datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tasks`
+ADD PRIMARY KEY (`id_task`);
+
+ALTER TABLE `tasks`
+MODIFY `id_task` int(11) NOT NULL AUTO_INCREMENT;
