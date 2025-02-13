@@ -4,9 +4,12 @@ namespace app\controllers;
 
 use app\models\Tasks;
 use app\models\TaskSearch;
+use yii\data\ActiveDataProvider;
+use yii\data\SqlDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * TasksController implements the CRUD actions for Tasks model.
@@ -22,7 +25,7 @@ class TasksController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -40,10 +43,33 @@ class TasksController extends Controller
     {
         $searchModel = new TaskSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        //$dataProvider->query->where(['status'=>1]); --Filtro de mayor nivel (Independiente a los filtros mostrados)
+        //$dataProvider->pagination->pageSize = 5; --Limitador de resultados por página
+
+        $grid = new ActiveDataProvider([ //Crear grid
+            'query' => Tasks::find()->where(['status' => 1]),
+            'pagination' => ['pagesize' => 1]
+        ]);
+
+        $rawSql = 'SELECT * FROM tasks WHERE status = :status'; //Consulta en "crudo"
+
+        $count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM tasks WHERE status =:status')->bindValue(':status', 1)->queryScalar();
+
+        $taskDP = new SqlDataProvider([
+            'sql' => $rawSql,
+            'params' => [':status' => 1],
+            'key' => 'id_task',
+            'totalCount' => $count,
+            'pagination' => [
+                'pageSize' => 5
+            ]
+        ]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'grid' => $grid, //Enviar grid a la vista
+            'taskDP' => $taskDP,
         ]);
     }
 

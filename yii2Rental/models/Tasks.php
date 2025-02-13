@@ -48,15 +48,15 @@ class Tasks extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_task' => 'Id Task',
-            'code' => 'Code',
-            'name' => 'Name',
-            'description' => 'Description',
-            'status' => 'Status',
-            'created_by' => 'Created By',
-            'created_at' => 'Created At',
-            'updatedted_by' => 'Updatedted By',
-            'updatedted_at' => 'Updatedted At',
+            'id_task' => 'ID',
+            'code' => 'Código',
+            'name' => 'Nombre',
+            'description' => 'Descripción',
+            'status' => 'Estado',
+            'created_by' => 'Creada por',
+            'created_at' => 'Creada el',
+            'updatedted_by' => 'Actualizada por',
+            'updatedted_at' => 'Actualizada el',
         ];
     }
 }

@@ -24,7 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
-        'dataProvider' => $dataProvider,
+        //'dataProvider' => $dataProvider, //Método 1
+        //'dataProvider' => $grid, //Método 2
+        'dataProvider' => $taskDP,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
@@ -32,20 +34,36 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_task',
             'code',
             'name',
-            'description:ntext',
+            //'description:ntext',
             'status',
             //'created_by',
-            //'created_at',
+            'created_at' => [
+                'attribute' => 'created_at',
+                'filter' => false,
+                'format' => ['date', 'php:d/m/y']
+            ],
             //'updatedted_by',
             //'updatedted_at',
+            /*  --Para el método 1 y 2 
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Tasks $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id_task' => $model->id_task]);
+                 }
+            ],
+            */
+
+            [
+                'class' => ActionColumn::class,  //PARA EL MÉTODO 3
+                'urlCreator' => function ($action, $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'id_task' => $model['id_task']]);
                  }
             ],
         ],
     ]); ?>
 
+<?php
+    dump($taskDP->getModels())
+?>
 
 </div>
