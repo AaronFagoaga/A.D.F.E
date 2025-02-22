@@ -45,6 +45,7 @@ class TasksController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
         //$dataProvider->query->where(['status'=>1]); --Filtro de mayor nivel (Independiente a los filtros mostrados)
         //$dataProvider->pagination->pageSize = 5; --Limitador de resultados por página
+        $dataProvider->pagination->pageSize = 10;
 
         $grid = new ActiveDataProvider([ //Crear grid
             'query' => Tasks::find()->where(['status' => 1]),
@@ -96,7 +97,15 @@ class TasksController extends Controller
         $model = new Tasks();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->code = $this->CreateCode();
+                $model->created_by = Yii::$app->user->identity->id;
+                $model->created_at = date("Y-m-d H:i:s");
+                $model->updated_by = Yii::$app->user->identity->id;
+                $model->updated_at = date("Y-m-d H:i:s");
+                
+                $model->save();
+
                 return $this->redirect(['view', 'id_task' => $model->id_task]);
             }
         } else {
@@ -119,7 +128,11 @@ class TasksController extends Controller
     {
         $model = $this->findModel($id_task);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            $model->updated_by = Yii::$app->user->identity->id;
+            $model->updated_at = date("Y-m-d H:i:s");
+            $model->save();
             return $this->redirect(['view', 'id_task' => $model->id_task]);
         }
 
@@ -156,5 +169,32 @@ class TasksController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    function CreateCode(){
+        $task = Tasks :: find()->orderBy(['id_task' => SORT_DESC])->one();
+        if (empty($task->code)) $code = 0;
+        else $code = $task->code;
+
+        $int = intval(preg_replace('/[^0-9]+/','', $code), 10);
+        $id = $int + 1;
+
+        $number = $id;
+        $tmp = "";
+
+        if ($id < 10){
+            $tmp .= "000";
+            $tmp .= $id;
+        }elseif ($id >= 10 && $id < 100) {
+            $tmp .= "00";
+            $tmp .= $id;
+        }elseif ($id >= 100 && $id < 1000) {
+            $tmp .= "0";
+            $tmp .= $id;
+        } else {
+            $tmp .= $id;
+        }
+        $result = str_replace($id, $tmp, $number);
+        return "TASK-" . $result;
     }
 }
