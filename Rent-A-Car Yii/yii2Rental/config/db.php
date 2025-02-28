@@ -11,7 +11,7 @@ return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=dbYii2_Rental',
     'username' => 'root',
-    'password' => 'P4ulitaDBP4ss!!!',
+    'password' => '1234',
     'charset' => 'utf8',
     
 
